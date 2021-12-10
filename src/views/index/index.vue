@@ -15,6 +15,9 @@
     let logicDatas = $ref('')
     let playerStates = $ref('')
 
+    // 游戏状态
+    let gameStates = $ref([])
+
 
     let tool = {
         add: { name: '+' },
@@ -31,6 +34,7 @@
     logicData().then(res => {
         logicDatas = {}
         playerStates = {}
+        gameStates = res.obj.gameStates
 
         res.obj.playerStates.forEach(item => {
             playerStates[item.className] = item
@@ -45,7 +49,9 @@
     //保存
     let btnLoading = $ref(false)
     const handleSave = () => {
-        let data = {}
+        let data = {
+           gameStates
+        }
         let arr = Object.getOwnPropertyNames(logicDatas)
         data.logicDatas = arr.map(function(i){return logicDatas[i]})
 
@@ -90,7 +96,7 @@
             :tool="tool"
         ></current-difficulty>
 
-        <h2>冲刺条</h2>
+        <h2>冲刺状态</h2>
 
         <!-- 本次眩晕时⻓ -->
         <dizziness-time
@@ -126,6 +132,8 @@
             :tool="tool"
         ></auto-interaction-wait-time>
 
+        <h2>连击状态</h2>
+
         <!-- 本次得分  -->
         <ScoreData
             :logicDatas="logicDatas"
@@ -151,6 +159,27 @@
             >
                 <el-input
                     v-model="item.duration"
+                    :placeholder="item.displayName"
+                >
+                <template #append>
+                    <el-button>秒</el-button>
+                </template>
+                </el-input>
+            </el-form-item>
+        </el-form>
+
+        <h2>游戏状态</h2>
+        <el-form 
+            label-width="120px"
+            class="player_state"
+        >
+            <el-form-item 
+                v-for="(item, index) in gameStates"
+                :key="index"
+                :label="item.displayName"
+            >
+                <el-input
+                    v-model="item.defaultDuration"
                     :placeholder="item.displayName"
                 >
                 <template #append>

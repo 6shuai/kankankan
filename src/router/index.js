@@ -31,8 +31,20 @@ const routes = [
             {
                 path: '/',
                 name: 'Home',
-                meta: { title: '首页' }, 
+                meta: { title: '逻辑关系' }, 
                 component: () => import('../views/index/index.vue')
+            }
+        ]
+    },
+    {
+        path: '/',
+        component: Layout,
+        children: [
+            {
+                path: '/config',
+                name: 'GameConfig',
+                meta: { title: '游戏配置' }, 
+                component: () => import('../views/config/index.vue')
             }
         ]
     },

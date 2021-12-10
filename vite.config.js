@@ -5,7 +5,7 @@ import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
 const serverUrl = 'http://192.168.1.32:8187'
-const api = ['/sign_in', '/logout', '/entry', '/user', '/logicData']
+const api = ['/sign_in', '/logout', '/entry', '/user', '/logicData', '/gameConfig']
 let proxyArr = {}
 api.forEach(item => {
 	proxyArr[item] = serverUrl

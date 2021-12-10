@@ -28,6 +28,9 @@
             <el-menu-item index="/">
                 <span>逻辑关系</span>
             </el-menu-item>
+            <el-menu-item index="/config">
+                <span>游戏配置</span>
+            </el-menu-item>
         </el-menu>
     </div>
 </template>

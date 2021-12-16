@@ -28,7 +28,7 @@
     //已完成⾃动交互数
     let doneCount = $ref(null)
 
-    // const ⾃动交互等待时⻓ = 后摇时⻓ * 冲刺⾃动交互减速系数 * 已完成⾃动交互数 * 已完成⾃动交互数 / (⾃动交互对象总数 * ⾃动交互对象总数)
+    // const ⾃动交互等待时⻓ = 后摇时⻓ * 冲刺⾃动交互减速系数 * 已完成⾃动交互数  / ⾃动交互对象总数 
     let data = $ref(
         [
             playerStates['server.state_machine.player_state.WindDownState'],
@@ -36,27 +36,20 @@
             logicDatas['rushSlowDownRatio'],
             subtract,
             { displayName: '已完成自动交互数', type: 'custom' },
-            subtract,
-            { displayName: '已完成自动交互数', type: 'custom' },
             divide,
-            bracketLeft,
             { displayName: '⾃动交互对象总数', name: null, tag: true },
-            subtract,
-            { displayName: '⾃动交互对象总数', name: null, tag: true },
-            bracketRight,
             equal,
             { displayName: '⾃动交互等待时⻓', name: null, tag: true },
         ]
     )
 
     const handleInputchange = () => {
-        let result = getJsonValue(playerStates['server.state_machine.player_state.WindDownState']) * getJsonValue(logicDatas['rushSlowDownRatio']) * doneCount * doneCount / (autoInteractionTotal.value * autoInteractionTotal.value)
+        let result = getJsonValue(playerStates['server.state_machine.player_state.WindDownState']) * getJsonValue(logicDatas['rushSlowDownRatio']) * doneCount  / autoInteractionTotal.value
         data[data.length-1].name = result.toFixed(2)
     }
 
     watch(autoInteractionTotal, (n) => {
-        data[9].name = n
-        data[11].name = n
+        data[6].name = n
         handleInputchange()
     })
 

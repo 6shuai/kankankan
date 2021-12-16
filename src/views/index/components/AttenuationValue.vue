@@ -12,19 +12,24 @@
     const store = useStore()
 
     let logicDatas = prop.logicDatas
-    let { equal, divide , bracketLeft, bracketRight} = prop.tool
+    let { add, equal, divide , subtract, bracketLeft, bracketRight} = prop.tool
+
+    //冲刺状态次数
+    let sprintCount = computed(() => store.state.logic.sprintStateCount )
 
     //蓄力值加成
     let accumulatorAddition = computed(() => store.state.logic.accumulatorAddition)
 
-    // const 蓄⼒值每秒衰减值 = 蓄⼒值加成 / (冲刺条初始衰减系数 / 冲刺条衰减难度系数)
+    // const 蓄⼒值每秒衰减值 = 蓄⼒值加成 / (冲刺条初始衰减系数 + 冲刺状态次数 * 冲刺条衰减难度系数)
     let attenuation = $ref(
         [
             { displayName: '蓄力值加成', name: null, tag: true },
             divide,
             bracketLeft,
             logicDatas['rushDiscountBaseRatio'], 
-            divide, 
+            add,
+            { displayName: '冲刺状态次数', type: 'custom' },
+            subtract,
             logicDatas['rushDiscountDifficulty'],
             bracketRight,
             equal,
@@ -33,12 +38,17 @@
     )
 
     const handleInputchange = () => {
-        let result = accumulatorAddition.value / (getJsonValue(logicDatas['rushDiscountBaseRatio']) / getJsonValue(logicDatas['rushDiscountDifficulty']))
+        let result = accumulatorAddition.value / (getJsonValue(logicDatas['rushDiscountBaseRatio']) + sprintCount.value * getJsonValue(logicDatas['rushDiscountDifficulty']))
         attenuation[attenuation.length-1].name = result.toFixed(4)
     }
 
     watch(accumulatorAddition, (n) => {
         attenuation[0].name = n
+        handleInputchange()
+    })
+
+    //监听冲刺状态次数修改
+    watch(sprintCount, (n) => {
         handleInputchange()
     })
 
@@ -66,6 +76,12 @@
                     :inputValue="item.value"
                     :valueType="item.valueType"
                     @inputChange="item.value = $event; handleInputchange()"
+                >
+                </input-number>
+                <input-number
+                    v-else-if="item.type=='custom'" 
+                    :inputValue="sprintCount"
+                    @inputChange="store.commit('logic/setSprintStateCount', $event)"
                 >
                 </input-number>
 

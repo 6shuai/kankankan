@@ -30,7 +30,7 @@
         let boolean = new RegExp("^[1-9][0-9]*$").test(e.target.value)
         if(!boolean) {
             ElMessage.error('请输入正整数')
-            e.target.value = ' '
+            e.target.value = ''
         }
     }
 

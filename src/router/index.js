@@ -53,6 +53,18 @@ const routes = [
         component: Layout,
         children: [
             {
+                path: '/robot',
+                name: 'RobotConfig',
+                meta: { title: '机器人配置' }, 
+                component: () => import('../views/robot/index.vue')
+            }
+        ]
+    },
+    {
+        path: '/',
+        component: Layout,
+        children: [
+            {
                 path: '/setting',
                 name: 'User',
                 meta: { title: '个人中心' }, 

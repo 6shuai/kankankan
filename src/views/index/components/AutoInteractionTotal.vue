@@ -1,5 +1,6 @@
 <script setup>
     import { getJsonValue } from '@/utils/index'
+    import { computed, watch } from 'vue'
     import { useStore } from 'vuex'
     import InputNumber from './InputNumber.vue'
  
@@ -12,7 +13,7 @@
     let { subtract, add, equal } = prop.tool
 
     //冲刺状态次数
-    let sprintCount = $ref(null)
+    let sprintCount = computed(() => store.state.logic.sprintStateCount )
 
     // const ⾃动交互对象总数 = 冲刺⾃动交互基数 + 冲刺状态次数 * 冲刺⾃动交互系数
     let data = $ref(
@@ -28,10 +29,15 @@
     )
 
     const handleInputchange = () => {
-        let result = getJsonValue(logicDatas['rushBaseCount']) + sprintCount * getJsonValue(logicDatas['rushCountRatio'])
+        let result = getJsonValue(logicDatas['rushBaseCount']) + sprintCount.value * getJsonValue(logicDatas['rushCountRatio'])
         data[data.length-1].name = result.toFixed(0)
         store.state.logic.autoInteractionTotal = result.toFixed(0)
     }
+
+    //监听冲刺状态次数修改
+    watch(sprintCount, (n) => {
+        handleInputchange()
+    })
 
 
 </script>
@@ -63,7 +69,7 @@
                 <input-number
                     v-else-if="item.type=='custom'" 
                     :inputValue="sprintCount"
-                    @inputChange="sprintCount= $event; handleInputchange()"
+                    @inputChange="store.commit('logic/setSprintStateCount', $event)"
                 >
                 </input-number>
 

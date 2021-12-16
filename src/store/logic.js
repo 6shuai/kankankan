@@ -18,22 +18,32 @@ const user = {
         logicDatas: [],
 
         //玩家状态数据
-        playerStates: []
+        playerStates: [],
+
+        //冲刺状态次数
+        sprintStateCount: null
 
     }),
 
     mutations: {
+        //用户登录数据
         setLogicDatas(state, data){
             var arr = Object.getOwnPropertyNames(data)
             state.logicDatas = arr.map(function(i){return data[i]})
 
         },
 
+        //设置玩家状态数据
         setPlayerStates(state, data){
             var arr = Object.getOwnPropertyNames(data)
             state.playerStates = arr.map(function(i){return data[i]})
-        }
+        },
 
+        //设置冲刺状态次数
+        setSprintStateCount(state, data){
+            console.log('冲刺状态次数------------>', data)
+            state.sprintStateCount = data
+        }
     },
 
     actions: {

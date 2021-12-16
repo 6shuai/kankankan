@@ -31,6 +31,9 @@
             <el-menu-item index="/config">
                 <span>游戏配置</span>
             </el-menu-item>
+            <el-menu-item index="/robot">
+                <span>机器人配置</span>
+            </el-menu-item>
         </el-menu>
     </div>
 </template>

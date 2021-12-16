@@ -1,6 +1,6 @@
 <script setup>
     import { watch } from 'vue'
-    import { ElMessage } from 'element-plus'
+    import { BlurText } from '@/utils/index'
 
     const props = defineProps({
         inputValue: Number | String,
@@ -25,15 +25,6 @@
         emit('inputChange', inputValue)
     }
 
-    const BlurText = (e) => {
-        if(isInteger != 1) return
-        let boolean = new RegExp("^[1-9][0-9]*$").test(e.target.value)
-        if(!boolean) {
-            ElMessage.error('请输入正整数')
-            e.target.value = ''
-        }
-    }
-
     //监听input 数据变化
     watch(() => props.inputValue, (n) => {
         inputValue = n
@@ -47,6 +38,6 @@
         :controls="false"
         v-model="inputValue" 
         @input="handleInputchange"
-        @blur="BlurText($event)"
+        @blur="BlurText($event, isInteger)"
     ></el-input>
 </template>

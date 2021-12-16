@@ -1,6 +1,7 @@
 <script setup>
     import { ElMessage } from 'element-plus'
     import { robotData, robotDataUpdate } from '@/api/robot'
+    import { BlurText } from '@/utils/index'
 
     //tab name
     let activeIndex = $ref('1')
@@ -22,15 +23,6 @@
                 ElMessage.success('提交成功~')
             }
         })
-    }
-
-    const BlurText = (e, valueType) => {
-        if(valueType != 1) return
-        let boolean = new RegExp("^[1-9][0-9]*$").test(e.target.value)
-        if(!boolean) {
-            ElMessage.error('请输入正整数')
-            e.target.value = ''
-        }
     }
 
 </script>

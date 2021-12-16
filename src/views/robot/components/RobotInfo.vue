@@ -58,8 +58,8 @@
                     @blur="BlurText($event, item.robotConfig.valueType)"
                     :placeholder="item.robotConfig.displayName"
                 >
-                <template #append>
-                    <el-button>秒</el-button>
+                <template #append v-if="item.robotConfig.displayName.indexOf('概率') < 0">
+                    <el-button>ms</el-button>
                 </template>
                 </el-input>
             </el-form-item>

@@ -7,7 +7,9 @@
  * @FilePath: \echarts\apiAdmin\src\layout\head.vue
 -->
 <script setup>
-    import { ArrowDown } from '@element-plus/icons'
+    import { serverRefresh } from '@/api/user'
+    import { ElMessage } from 'element-plus'
+    import { ArrowDown, Refresh } from '@element-plus/icons'
     import { useRouter, useRoute } from 'vue-router'
     import { useStore } from 'vuex'
     import { computed } from 'vue'
@@ -22,11 +24,33 @@
 
     if(localStorage.loginData) store.state.user.loginData = JSON.parse(localStorage.loginData)
 
+    // 游戏服务器重新加载改动过的数据
+    let refreshLoading = $ref(false)
+    const handleRefresh = () => {
+        refreshLoading = true
+        serverRefresh().then(res => {
+            refreshLoading = false   
+            if(res.result){
+                ElMessage.success('加载成功~')         
+            }
+        })
+    }
+
 </script>
 
 <template>
     <div class="page-head">
         <div class="right">
+            <el-button
+                type="primary"
+                size="mini"
+                class="refresh_btn"
+                :loading="refreshLoading"
+                @click="handleRefresh"
+                :icon="Refresh"
+            >  
+                服务器重新加载
+            </el-button>
             <el-image 
                 v-if="userData.avatar"
                 fit="cover" 
@@ -66,6 +90,10 @@
             float: right;
             height: 100%;
             padding-right: 10px;
+
+            .refresh_btn{
+                margin-right: 20px;
+            }
 
             .el-image{
                 width: 35px;

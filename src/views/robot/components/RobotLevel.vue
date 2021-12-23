@@ -1,4 +1,5 @@
 <script setup>
+    import { onMounted } from 'vue'
     import { robotLevelData, robotLevelUpdate } from '@/api/robot'
     import { ElMessage } from 'element-plus'
 
@@ -24,9 +25,12 @@
         },
     ]
 
-    robotLevelData().then(res => {
-        robotRow = res.obj
-    })
+    //获取机器人进入顺序对应的等级
+    const getRobotLevelData = () => {
+        robotLevelData().then(res => {
+            robotRow = res.obj
+        })
+    }
 
     //修改机器人等级
     const handleChangeLevel = (data) => {
@@ -36,6 +40,10 @@
             }
         })
     }
+
+    onMounted(() => {
+        getRobotLevelData()
+    })
     
 
 </script>

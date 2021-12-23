@@ -1,4 +1,5 @@
 <script setup>
+    import { onMounted } from 'vue'
     import { logicData, logicDataEdit } from '@/api/content'
     import { DocumentChecked } from '@element-plus/icons'
     import { ElMessage } from 'element-plus'
@@ -30,20 +31,22 @@
         comma: { name: ',' },
     }
 
-
-    logicData().then(res => {
-        logicDatas = {}
-        playerStates = {}
-        gameStates = res.obj.gameStates
-
-        res.obj.playerStates.forEach(item => {
-            playerStates[item.className] = item
+    //获取逻辑关系 数据列表
+    const getLogicData = () => {
+        logicData().then(res => {
+            logicDatas = {}
+            playerStates = {}
+            gameStates = res.obj.gameStates
+    
+            res.obj.playerStates.forEach(item => {
+                playerStates[item.className] = item
+            })
+    
+            res.obj.logicDatas.forEach(item => {
+                logicDatas[item.variant] = item
+            })
         })
-
-        res.obj.logicDatas.forEach(item => {
-            logicDatas[item.variant] = item
-        })
-    })
+    }
 
 
     //保存
@@ -66,6 +69,10 @@
             }
         })
     }
+
+    onMounted(() => {
+        getLogicData()
+    })
 
 
 </script>

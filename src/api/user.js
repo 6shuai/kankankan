@@ -16,4 +16,4 @@ export function userDataUpdate(data) { return put('/user/', data) }
 export function userPasswordUpdate(data) { return put('/user/password', data) }
 
 //游戏服务器重新加载
-export function serverRefresh(data) { return post('/load_global', data) }
+export function serverRefresh(data) { return post('/gameConfig/load', data) }

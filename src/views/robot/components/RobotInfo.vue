@@ -11,7 +11,7 @@
     import { ElMessage } from 'element-plus'
     import { robotData, robotDataUpdate } from '@/api/robot'
     import { BlurText } from '@/utils/index'
-
+    
     //获取机器人数据
     let robotResData = $ref([])
     let robotDataLabel = $ref([])

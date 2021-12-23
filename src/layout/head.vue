@@ -13,6 +13,7 @@
     import { useRouter, useRoute } from 'vue-router'
     import { useStore } from 'vuex'
     import { computed } from 'vue'
+    import axios from 'axios'
 
     const route = useRoute()
     const router = useRouter()
@@ -34,6 +35,13 @@
                 ElMessage.success('加载成功~')         
             }
         })
+
+        // axios.post('http://123.206.83.233:8123/load_global').then(res => {
+        //     refreshLoading = false   
+        //     if(res.result){
+        //         ElMessage.success('加载成功~')         
+        //     }
+        // })
     }
 
 </script>
